@@ -16,6 +16,10 @@ public class MapperDefinitions {
 		return mapper.map(value, FlightDto.class);
 	}
 	
+	public static FlightDto ToFlightDto(FlightViewModel value, ModelMapper mapper) {
+		return mapper.map(value, FlightDto.class);
+	}
+	
 	public static Flight ToFlightModel(FlightDto value, ModelMapper mapper) {
 		return mapper.map(value, Flight.class);
 	}

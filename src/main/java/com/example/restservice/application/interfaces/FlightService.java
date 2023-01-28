@@ -9,4 +9,10 @@ public interface FlightService {
 	
 	List<FlightDto> getAll(Optional<Integer> limit);
 	
+	void addFlight(FlightDto value);
+	
+	void deleteFlight(String id);
+	
+	void seed();
+	
 }
