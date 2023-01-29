@@ -3,7 +3,9 @@ package com.example.restservice.infrastructure.mapping;
 import org.modelmapper.ModelMapper;
 
 import com.example.restservice.application.dtos.FlightDto;
+import com.example.restservice.application.dtos.FlightPathDto;
 import com.example.restservice.domain.models.Flight;
+import com.example.restservice.view.model.FlightPathViewModel;
 import com.example.restservice.view.model.FlightViewModel;
 
 public class MapperDefinitions {
@@ -22,6 +24,10 @@ public class MapperDefinitions {
 	
 	public static Flight ToFlightModel(FlightDto value, ModelMapper mapper) {
 		return mapper.map(value, Flight.class);
+	}
+	
+	public static FlightPathViewModel ToFlightPathView(FlightPathDto value, ModelMapper mapper) {
+		return mapper.map(value, FlightPathViewModel.class);
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.example.restservice.application.dtos.FlightDto;
+import com.example.restservice.application.dtos.FlightPathDto;
 
 public interface FlightService {
 	
@@ -14,5 +15,7 @@ public interface FlightService {
 	void deleteFlight(String id);
 	
 	void seed();
+	
+	List<FlightPathDto> getPaths(String origin, String destination);
 	
 }

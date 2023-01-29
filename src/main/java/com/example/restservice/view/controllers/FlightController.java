@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restservice.application.interfaces.FlightService;
 import com.example.restservice.infrastructure.mapping.MapperDefinitions;
+import com.example.restservice.view.model.FlightPathViewModel;
 import com.example.restservice.view.model.FlightViewModel;
 
 @RestController
@@ -51,6 +52,16 @@ public class FlightController {
 	@PostMapping("seed")
 	public void seed() {
 		service.seed();
+	}
+	
+	@GetMapping("available")
+	public List<FlightPathViewModel> flights(
+			@RequestParam(value = "origin", required=true) String origin,
+			@RequestParam(value = "destination", required=true) String destination
+			) {		
+		return service.getPaths(origin, destination).stream()
+				.map(path -> MapperDefinitions.ToFlightPathView(path, this.mapper))
+				.toList();
 	}
 	
 }
