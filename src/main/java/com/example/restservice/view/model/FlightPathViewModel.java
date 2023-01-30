@@ -1,17 +1,20 @@
 package com.example.restservice.view.model;
 
+import java.util.List;
+
 public class FlightPathViewModel {
-	private String flightId;
+	
+	private List<FlightViewModel> flights;
 	private String origin;
 	private String destination;
 	private long departure;
 	private long duration;
 	
-	public String getFlightId() {
-		return flightId;
+	public List<FlightViewModel> getFlights() {
+		return flights;
 	}
-	public void setFlightId(String flightId) {
-		this.flightId = flightId;
+	public void setFlights(List<FlightViewModel> flights) {
+		this.flights = flights;
 	}
 	public String getOrigin() {
 		return origin;
@@ -37,4 +40,6 @@ public class FlightPathViewModel {
 	public void setDuration(long duration) {
 		this.duration = duration;
 	}
+	
+	
 }

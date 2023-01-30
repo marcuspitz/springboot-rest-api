@@ -1,18 +1,20 @@
 package com.example.restservice.application.dtos;
 
+import java.util.List;
+
 public class FlightPathDto {
 
-	private String flightId;
+	private List<FlightDto> flights;
 	private String origin;
 	private String destination;
 	private long departure;
 	private long duration;
 	
-	public String getFlightId() {
-		return flightId;
+	public List<FlightDto> getFlights() {
+		return flights;
 	}
-	public void setFlightId(String flightId) {
-		this.flightId = flightId;
+	public void setFlights(List<FlightDto> flights) {
+		this.flights = flights;
 	}
 	public String getOrigin() {
 		return origin;

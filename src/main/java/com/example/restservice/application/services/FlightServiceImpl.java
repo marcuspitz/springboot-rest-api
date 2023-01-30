@@ -1,6 +1,5 @@
 package com.example.restservice.application.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +16,7 @@ import com.example.restservice.application.interfaces.FlightService;
 import com.example.restservice.domain.interfaces.FlightDomainService;
 import com.example.restservice.domain.interfaces.FlightRepository;
 import com.example.restservice.domain.models.Flight;
+import com.example.restservice.domain.models.FlightPath;
 import com.example.restservice.infrastructure.exceptions.NotFoundException;
 import com.example.restservice.infrastructure.mapping.MapperDefinitions;
 
@@ -58,12 +58,25 @@ public class FlightServiceImpl implements FlightService{
 	
 	public List<FlightPathDto> getPaths(String origin, String destination) {
 		logger.info(String.format("Bulding paths for %s to %s", origin, destination));
-		
-		List<Flight> flights = repository.findByOriginOrDestination(origin, destination);
-		
+		List<Flight> flights = (List<Flight>) repository.findAll();
 		logger.info(String.format("Found flights: \n%s", String.join("\n", flights.stream().map(flight -> String.format("%s -> %s", flight.getOrigin(), flight.getDestination())).toList())));
 		
-		return new ArrayList<FlightPathDto>();
+		List<FlightPath> paths = domainService.doPaths(origin, destination, flights);
+		logger.info(String.format("Paths (%d): \n%s", paths.size(), String.join("\n", paths.stream()
+				.map(path -> String.join(" -> ", path.getFlights()
+						.stream()
+						.map(f -> String.format("%s - %s", f.getOrigin(), f.getDestination())).toList()))
+				.toList())));
+		
+		return paths.stream().map(path -> {
+			FlightPathDto pathDto = new FlightPathDto();
+			pathDto.setFlights(path.getFlights().stream().map(f -> MapperDefinitions.ToFlightDto(f, this.mapper)).toList());
+			pathDto.setDestination(destination);
+			pathDto.setOrigin(origin);
+			pathDto.setDeparture(pathDto.getFlights().stream().findFirst().get().getDeparture());
+			pathDto.setDuration(pathDto.getFlights().stream().map(f -> f.getDuration()).reduce(0l, Long::sum));
+			return pathDto;
+		}).toList();
 	}
 	
 }
