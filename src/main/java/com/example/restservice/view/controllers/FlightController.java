@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restservice.application.interfaces.FlightService;
 import com.example.restservice.infrastructure.mapping.MapperDefinitions;
+import com.example.restservice.view.model.FlightClusterViewModel;
 import com.example.restservice.view.model.FlightPathViewModel;
 import com.example.restservice.view.model.FlightViewModel;
 
@@ -61,6 +62,13 @@ public class FlightController {
 			) {		
 		return service.getPaths(origin, destination).stream()
 				.map(path -> MapperDefinitions.ToFlightPathView(path, this.mapper))
+				.toList();
+	}
+	
+	@GetMapping("cluster")
+	public List<FlightClusterViewModel> allCluster() {		
+		return service.getAllCluster().stream()
+				.map((f) -> MapperDefinitions.ToFlightClusterView(f, this.mapper))
 				.toList();
 	}
 	
